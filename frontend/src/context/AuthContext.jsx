@@ -7,36 +7,49 @@ import {
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+const [user, setUser] =
+    useState(() => {
 
-    const [user, setUser] =
-        useState(null);
+        const savedUser =
+            localStorage.getItem("user");
+
+        return savedUser
+            ? JSON.parse(savedUser)
+            : null;
+
+    });
 
     const [token, setToken] =
         useState(
             localStorage.getItem("token")
         );
 
+   
     function login(
-        userData,
+    userData,
+    jwtToken,
+) {
+
+    localStorage.setItem(
+        "token",
         jwtToken,
-    ) {
+    );
 
-        localStorage.setItem(
-            "token",
-            jwtToken,
-        );
+    localStorage.setItem(
+        "user",
+        JSON.stringify(userData),
+    );
 
-        setUser(userData);
+    setUser(userData);
 
-        setToken(jwtToken);
+    setToken(jwtToken);
 
-    }
+}
 
     function logout() {
+        localStorage.removeItem("token");
 
-        localStorage.removeItem(
-            "token"
-        );
+        localStorage.removeItem("user");
 
         setUser(null);
 

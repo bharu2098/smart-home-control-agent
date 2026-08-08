@@ -6,16 +6,20 @@ import QuickActions from "../components/QuickActions";
 import ClearChatModal from "../components/ClearChatModal";
 import ExportChatModal from "../components/ExportChatModal";
 import { sendMessage } from "../api/ai";
-
+import { useAuth } from "../context/AuthContext";
 function AIChat() {
+    const { user } = useAuth();
+
+const chatKey =
+    user
+        ? `smart-home-chat-${user.id}`
+        : "smart-home-chat";
 
     const [messages, setMessages] =
         useState(() => {
 
             const savedChat =
-                localStorage.getItem(
-                    "smart-home-chat"
-                );
+    localStorage.getItem(chatKey);
 
             if (savedChat) {
 
@@ -47,11 +51,11 @@ const [matchedIndexes, setMatchedIndexes] =
 
         localStorage.setItem(
 
-            "smart-home-chat",
+    chatKey,
 
-            JSON.stringify(messages)
+    JSON.stringify(messages)
 
-        );
+);
 
     }, [messages]);
    
@@ -240,8 +244,8 @@ const [matchedIndexes, setMatchedIndexes] =
         setMessages([]);
 
         localStorage.removeItem(
-            "smart-home-chat"
-        );
+    chatKey
+);
 
         setShowClearModal(false);
 
