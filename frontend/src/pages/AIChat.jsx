@@ -244,8 +244,8 @@ const [matchedIndexes, setMatchedIndexes] =
         setMessages([]);
 
         localStorage.removeItem(
-    chatKey
-);
+            "smart-home-chat"
+        );
 
         setShowClearModal(false);
 
