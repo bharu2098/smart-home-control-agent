@@ -56,19 +56,17 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-
-# =====================================================
-# CORS
-# =====================================================
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://smart-home-control-agent-m07t0pc6-bhgs-projects-019873cb.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # =====================================================
 # Routers
